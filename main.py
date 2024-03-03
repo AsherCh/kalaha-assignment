@@ -1,7 +1,7 @@
-def print_board():
-    state={0:[4]*6+[0],
-           1:[4]*6+[0]}
-    
+from Board import *
+
+def print_board(board):
+    state = board.get_state()
     print ("-------------Kalaha----------------")
     print ("-------------By Group 39-----------")
 
@@ -13,6 +13,11 @@ def print_board():
     print("==========================================")
 
 if __name__ == "__main__":
-    print_board()
-   
-
+    # Play the game
+    HUMAN_PLAYER = 0
+    COMPUTER_PLAYER = 1
+    board = Board()
+    print_board (board)
+    print ("Please pick up your stones from your side:")
+    pit_index = int(input())-1
+    board.take_stones(pit_index)

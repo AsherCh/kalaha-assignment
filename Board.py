@@ -13,7 +13,13 @@ class Board:
        
       def get_state(self):
             return copy.deepcopy(self.state)
-      
+            
+      def reverse_player(self):
+            if self.turn == 1:
+                  self.turn = 0
+            else:
+                  self.turn = 1
+                  
       def take_stones(self,pit_index):
             if self.turn == 1:
                   opposite_turn = 0
@@ -30,6 +36,10 @@ class Board:
                   if pit_index >= len(state_array):
                         pit_index = 0
                   state_array[pit_index] += 1
+            #Save the stone number to the state
+            self.state[self.turn] = state_array[0:7]
+            self.state[opposite_turn] = state_array[7:len(state_array)]
+            
             ## steal the stones???
             ## capture stones
                   

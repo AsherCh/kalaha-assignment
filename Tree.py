@@ -5,6 +5,7 @@ class Tree:
     def __init__(self,node,max_depth):
         self.max_depth = max_depth
         self.root = node
+        self.children = {}
 
     def set_root(self,root):
         self.root = root
@@ -16,24 +17,37 @@ class Tree:
         #Exit the tree if exceeded the depth limit 2 =  0,1
         if depth >=self.max_depth:
             return 
-        board = node.get_board()
+        board = node.get_data()
+        if depth >= 1:
+            board.reverse_player()
         print ("          ")
-        print ("Depth:", depth," Root:",board.get_state())
+        print ("Current palyer:",board.get_turn()," Depth:", depth," Root:",board.get_state())
         print ("          ")
         #Find all children
         for i in range(0, 6):
-            board = copy.deepcopy(node.get_board()) # Copy the root node and seperate the children node
+            board = copy.deepcopy(node.get_data()) # Copy the root node and seperate the children node
             if board.take_stones(i):
-               node.add_children(i,Node(board))
-               print ("  Children:",node.get_children()[i].get_board().get_state())    
+               child_node = Node(board)
+               node.add_children(i,child_node)
+               #print ("  Children:",node.get_children()[i].get_board().get_state())    
         #Go through the next depth to find all children, Order might be optimized
-
+       # self.save_tree(node,node.get_children().values())
+            
         for child in node.get_children().values():
             self.build(child,depth+1)
 
+   # def save_tree(self,parent_node,child_node_array):
+    #    self.tree["Node"] = parent_node
+     #   self.tree["children"]= child_node_array
+
+   # def print_tree(self):
+    #    print(self.tree["Node"].get_board().get_state())
+     #   for i in self.tree["children"]:
+      #      print ("Children:", i.get_board().get_state())
+
 class Node:
-    def __init__(self,board):
-        self.board = board
+    def __init__(self,data):
+        self.data = data
         self.children = {}
 
     def add_children(self,move_id,child):
@@ -42,12 +56,23 @@ class Node:
     def get_children(self):
         return self.children
     
-    def set_board(self,board):
-        self.board = board
+    def set_data(self,data):
+        self.data = data
     
-    def get_board(self):
-        return self.board
+    def get_data(self):
+        return self.data
     
     #calculate the utility
     def get_utility(self,eval_func):
-        return eval_func(self.board)
+        return eval_func(self.data)
+    
+class Leaf:
+    def __init__(self, data):
+        self.data = data
+
+    def get_data(self):
+        return self.data
+
+    #calculate the utility
+    def get_utility(self,eval_func):
+        return eval_func(self.data)

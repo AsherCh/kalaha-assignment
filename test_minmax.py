@@ -11,9 +11,6 @@ def test_minimax_simple_case():
     simple_tree.children[1].children = {0: Leaf(2), 1: Leaf(4), 2: Leaf(6)}
     simple_tree.children[2].children = {0: Leaf(4), 1: Leaf(12), 2: Leaf(8)}
 
-   # print ("Tree:", sample_tree.get_data())
-    #print ("Tree:", sample_tree.children[0].get_children()[0].get_data())
-
     obj = Tree(simple_tree,2)
 
     # Return the value from the Node
@@ -25,8 +22,8 @@ def test_minimax_simple_case():
 
     minimax = Minmax(evaluation_fuction, find_children, 2)
 
-    v,slot = minimax.alpha_beta(obj)
-    print (v,slot)
+    utiltiy,best_move = minimax.alpha_beta(obj)
+    print ("utility:",utiltiy,"best_move",best_move)
 
 if __name__ == "__main__":
     test_minimax_simple_case()

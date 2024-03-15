@@ -48,9 +48,10 @@ class Board:
             self.turn = 1
 
     def take_stones(self, pit_index):
+        '''
         if not self.pit_not_empty_rule(pit_index):
             return False
-
+        '''
         pit_index = pit_index if self.turn == 1 else 12 - pit_index
 
         state_array = self.state[1] + self.state[0]
@@ -79,13 +80,14 @@ class Board:
 
         self.state[1] = state_array[:7]
         self.state[0] = state_array[7:]
-
+        '''
         if pit_index == 6 and self.turn == 1:
             self.continue_playing()
 
         if pit_index == 13 and self.turn == 0:
             self.continue_playing()
 
+        '''
         return True
 
     def terminate(self):

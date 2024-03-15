@@ -25,9 +25,12 @@ class Board:
                   self.turn = 1
       
       def take_stones(self,pit_index):
-            # if the pit_index exceed the range of the pit number 1,2,3,4,5,6 , return false
-            if pit_index <0 or pit_index >5 :
+            if not self.check_pite_owner(pit_index):
                   return False
+      
+            if not self.pit_not_empty_rule(pit_index):
+                  return False
+           
             # if the pit is empty, you can't pick up the stones from that pit, return false
             if self.state[self.turn][pit_index] == 0:
                   return False
@@ -38,7 +41,6 @@ class Board:
                   opposite_turn = 1
                   
             state_array = self.state[self.turn]+self.state[opposite_turn]
-
             # Take stones from the pit
             pit_stones = state_array[pit_index]
             state_array[pit_index] = 0
@@ -59,4 +61,20 @@ class Board:
                   
       def terminate(self):
             pass
+      
+      def check_pite_owner(self, pit_index):
+         # if the pit_index exceed the range of the pit number 1,2,3,4,5,6 , return false
+            if pit_index <0 or pit_index >5:
+                  print ("You can ony choose your own pit")
+                  return False
+            return True
+
+      def pit_not_empty_rule(self,pit_index):
+        player_pits = self.state[self.turn]
+        if player_pits[pit_index] == 0:
+            print ('You can not pick from an empty pit, try another one')
+            return False
+        return True
+
+
 

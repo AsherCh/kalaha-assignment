@@ -36,23 +36,23 @@ if __name__ == "__main__":
         pit_index = int(input())-1
         board.take_stones(pit_index)
         print_board (board)
-        #Change the player to the computer
-        board.reverse_player()
-        current_player=board.get_turn()
-        print (current_player," AI found the best move")
-        root_node = Node(board)
-        tree = Tree(root_node,MAX_DEPTH)
-        tree.build(tree.get_root(),0)
-        #tree.print_tree()
+        # #Change the player to the computer
+        # board.reverse_player()
+        # current_player=board.get_turn()
+        # print (current_player," AI found the best move")
+        # root_node = Node(board)
+        # tree = Tree(root_node,MAX_DEPTH)
+        # tree.build(tree.get_root(),0)
+        # #tree.print_tree()
 
-        utility,move_i = minmax.alpha_beta(tree)
-        print ("MAIN.py: Utility:",utility,"Best_Move:",move_i)
+        # utility,move_i = minmax.alpha_beta(tree)
+        # print ("MAIN.py: Utility:",utility,"Best_Move:",move_i)
 
-        print ("                    ")
-        print("==========================================")
-        #Change the player to the Human
-        board.reverse_player()
-        index +=1
+        # print ("                    ")
+        # print("==========================================")
+        # #Change the player to the Human
+        # board.reverse_player()
+        # index +=1
 
     print ("Game is over")
 

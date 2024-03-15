@@ -69,7 +69,6 @@ class Board:
                 pit_index = 0
             state_array[pit_index] += 1
 
-        print("value of the index pit", state_array[pit_index])
         if state_array[pit_index] == 1:
             if self.turn == 1:
                 to_capture_pit = abs(pit_index - 12)
@@ -119,7 +118,9 @@ class Board:
 
     def get_winner(self):
         self.state[1][-1] += sum(self.state[1][:-1][::-1])
+        self.state[1][:-1] = [0] * (len(self.state[1]) - 1)
         self.state[0][-1] += sum(self.state[0][:-1][::-1])
+        self.state[0][:-1] = [0] * (len(self.state[0]) - 1)
         self.print_board()
         player1Stones = self.state[1][-1]
         player2Stones = self.state[0][-1]

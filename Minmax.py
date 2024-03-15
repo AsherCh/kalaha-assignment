@@ -14,7 +14,7 @@ class Minmax:
     def max_value(self,node,a,b,depth):
         if depth >= self.max_depth:
             value = node.get_utility(self.eval_func)
-            print ("Utility:",value)
+            # print ("Utility:",value)
             return value,0
         
         # alpha
@@ -27,7 +27,7 @@ class Minmax:
             v = max(v,self.min_value(child_node,a,b,depth+1)[0])
             # cut off
             if v >= b:
-                print ("max_value():cut off")
+                # print ("max_value():cut off")
                 return v,best_move
             if v > a:
                 best_move = i
@@ -38,7 +38,7 @@ class Minmax:
     def min_value(self,node,a,b,depth):
         if depth >= self.max_depth:
             value = node.get_utility(self.eval_func)
-            print ("Utility:",value)
+            # print ("Utility:",value)
             return value,0
         
         v = float('inf')
@@ -50,7 +50,7 @@ class Minmax:
             v = min(v,self.max_value(child_node,a,b,depth+1)[0])
             # cut off
             if v <= a:
-                print ("min_value():cut off")
+                # print ("min_value():cut off")
                 return v,best_move
             if v < b:
                 best_move = i

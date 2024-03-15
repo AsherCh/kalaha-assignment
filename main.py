@@ -13,7 +13,7 @@ if __name__ == "__main__":
     # Play the game
     HUMAN = 1
     COMPUTER = 0
-    MAX_DEPTH = 2
+    MAX_DEPTH = 5
     # Human as the first player
     board = Board(HUMAN)
     # print the initial board
@@ -33,28 +33,17 @@ if __name__ == "__main__":
         pit_index = int(input()) - 1
         board.take_stones(pit_index)
         board.print_board()
+        
+        board.reverse_player()
+        root_node = Node(board)
+        tree = Tree(root_node, MAX_DEPTH)
+        tree.build(tree.get_root(), 0)
+        utility, move_i = minmax.alpha_beta(tree)
+        print("AI Best Move: Utility:", utility, "Best_Move:", move_i)
+        board.take_stones(move_i)
+        board.print_board()
+        board.reverse_player()
         game_end = board.terminate()
-        # Change the player to the computer
-        # board.reverse_player()
-        # current_player = board.get_turn()
-        # print(current_player, " choose your move")
-        # pit_index = int(input()) - 1
-        # board.take_stones(pit_index)
-        # print_board(board)
-        # board.reverse_player()
-        # root_node = Node(board)
-        # tree = Tree(root_node, MAX_DEPTH)
-        # tree.build(tree.get_root(), 0)
-
-        # utility, move_i = minmax.alpha_beta(tree)
-        # print("MAIN.py: Utility:", utility, "Best_Move:", move_i)
-        # board.take_stones(move_i)
-        # print_board(board)
-        # print("                    ")
-        # print("==========================================")
-        # # #Change the player to the Human
-        # board.reverse_player()
-        # index += 1
-
+        
     print("Game is over")
     board.get_winner()

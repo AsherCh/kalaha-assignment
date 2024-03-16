@@ -48,10 +48,13 @@ class Board:
             self.turn = 1
 
     def take_stones(self, pit_index):
-        '''
+        """This method handles the moment of the stones"""
+
+        # Check the choosed pit is not empty
         if not self.pit_not_empty_rule(pit_index):
             return False
-        '''
+
+        # get the pit_index
         pit_index = pit_index if self.turn == 1 else 12 - pit_index
 
         state_array = self.state[1] + self.state[0]
@@ -62,35 +65,59 @@ class Board:
 
         for i in range(pit_stones):
             pit_index += 1
+            # skip the kalaha's of the opponent player
             if self.turn == 1 and pit_index == 13:
                 pit_index = 0
             elif self.turn == 0 and pit_index == 6:
                 pit_index = 7
             elif pit_index > 13:
                 pit_index = 0
+            # Destribute the stones from choosen pit in to next pits, including players own kalaha
             state_array[pit_index] += 1
 
+        # If the last stone ends up in an empty pit and the opponent has stones, then steal the opponent's stones
         if state_array[pit_index] == 1:
-            if self.turn == 1:
+            # check the last stone doesn't end up in kalaha's
+            if pit_index not in (6, 13):
+                # get the index of opponent's pit
                 to_capture_pit = abs(pit_index - 12)
-                capture_stones = state_array[to_capture_pit] + state_array[pit_index]
-                state_array[to_capture_pit] = 0
-                state_array[pit_index] = 0
-                state_array[6] += capture_stones
+                # check player and some inital knowledge
+                if self.turn == 1:
+                    player_kalaha = 6
+                    pit_start_index = 0
+                else:
+                    player_kalaha = 13
+                    pit_start_index = 7
 
+                # check that the opponent's pit is not empty, and also that the last pit is player's own pit
+                if (
+                    state_array[to_capture_pit] != 0
+                    and pit_start_index <= pit_index < player_kalaha
+                ):
+                    # get stones from both pits
+                    capture_stones = (
+                        state_array[to_capture_pit] + state_array[pit_index]
+                    )
+                    # empty opponents pit
+                    state_array[to_capture_pit] = 0
+                    # empty player's pit
+                    state_array[pit_index] = 0
+                    # add captured/stealed stones into player's kalaha
+                    state_array[player_kalaha] += capture_stones
+
+        # update board state after move
         self.state[1] = state_array[:7]
         self.state[0] = state_array[7:]
-        '''
-        if pit_index == 6 and self.turn == 1:
+
+        # check if the last stone ends in player's kalaha
+        if (pit_index == 6 and self.turn == 1) or (pit_index == 13 and self.turn == 0):
             self.continue_playing()
 
-        if pit_index == 13 and self.turn == 0:
-            self.continue_playing()
-
-        '''
         return True
 
     def terminate(self):
+        """This method implements kalaha termination/end by checking that either player's pits are empty"""
+
         player_one_pits = self.state[1][:-1][::-1]
         player_two_pits = self.state[0][:-1][::-1]
         return all(stones == 0 for stones in player_one_pits) or all(
@@ -98,6 +125,8 @@ class Board:
         )
 
     def pit_not_empty_rule(self, pit_index):
+        """This method implements kalaha rule that the player can't choose an empty pit."""
+
         if self.turn == 0:
             player_pits = self.state[self.turn][:-1][::-1] + [self.state[self.turn][-1]]
         else:
@@ -105,20 +134,25 @@ class Board:
 
         if player_pits[pit_index] == 0:
             print("You can not pick from an empty pit, try another one")
-            pit_index = int(input()) - 1
+            pit_index = self.get_user_move()
             self.take_stones(pit_index)
             return False
         return True
 
     def continue_playing(self):
+        """This method implements kalaha rule that if the last stone ends up in players kalaha then the player can make another move.
+        Therefore, named as continue_playing"""
+
         if not self.terminate():
             self.print_board()
             print("Hurry!! pick another stone from your side :)")
-            pit_index = int(input()) - 1
+            pit_index = self.get_user_move()
             self.take_stones(pit_index)
         return True
 
     def get_winner(self):
+        """This method is defined to get the winner of the game."""
+
         self.state[1][-1] += sum(self.state[1][:-1][::-1])
         self.state[1][:-1] = [0] * (len(self.state[1]) - 1)
         self.state[0][-1] += sum(self.state[0][:-1][::-1])
@@ -132,3 +166,17 @@ class Board:
             print("Player 2 has won the game")
         else:
             print("The match has been drawn")
+
+    def get_user_move(self):
+        """Validates the user input and ensure that the input must be an int and in range of valid moves."""
+
+        try:
+            move = int(input()) - 1
+            if move in range(6):
+                return move
+            else:
+                print("Invalid input please enter a number between 1 and 6")
+                self.get_user_move()
+        except ValueError:
+            print("Invalid input please enter a number between 1 and 6")
+            self.get_user_move()

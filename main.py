@@ -31,25 +31,19 @@ if __name__ == "__main__":
         print("AI Best Move: Utility:", utility, "Best_Move:", move_i + 1)
         return move_i
 
-    def continue_playing(minimax, is_ai=False):
-        if is_ai:
-            move_i = get_ai_move(minimax)
-            response = board.take_stones(move_i)
-            board.print_board()
-        else:
-            response = board.continue_playing()
-            if response == "empty_pit":
-                board.pit_empty()
-                board.print_board()
+    def continue_playing(minimax):
+        move_i = get_ai_move(minimax)
+        response = board.take_stones(move_i)
+        board.print_board()
 
         if response == "continue":
-            continue_playing(is_ai)
+            continue_playing(minimax)
 
         return True
 
     ##  evaluation_function2 and evaluation_function3 are better
 
-    ai1 = Minmax(evaluation_function5, find_children, 3)
+    ai1 = Minmax(evaluation_function5, find_children, 5)
     ai2 = Minmax(evaluation_function6, find_children, 5)
 
     game_end = False
@@ -77,7 +71,7 @@ if __name__ == "__main__":
             board.pit_empty()
             board.print_board()
         elif response == "continue":
-            continue_playing(ai1, True)
+            continue_playing(ai1)
 
         # AI2
         board.reverse_player()
@@ -88,7 +82,7 @@ if __name__ == "__main__":
             board.pit_empty()
             board.print_board()
         elif response == "continue":
-            continue_playing(ai2, True)
+            continue_playing(ai2)
 
         game_end = board.terminate()
         if game_end:

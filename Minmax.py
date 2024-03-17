@@ -43,7 +43,7 @@ class Minmax:
     def min_value(self,node,a,b,depth):
         if depth >= self.max_depth:
             value = node.get_utility(self.eval_func)
-            print ("min_value Utility:",value)
+            #print ("min_value Utility:",value)
             return value,0
         v = float('inf')
         best_move=-1

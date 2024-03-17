@@ -60,9 +60,39 @@ def evaluation_function4(board):
     return utility_value
 
 def evaluation_function5(board):
-    return 10
+    state = board.get_state()
+    # last position in array [-1]
+    human_kalah = state[1][-1]
+    computer_kalah = state[0][-1]
+    human_pits = state[1][:-1]
+    computer_pits = state[0][:-1]
+    human_empty_pits = 0
+    computer_empty_pits = 0
+    for i in human_pits:
+        if i == 0:
+            human_empty_pits += 1
+    for i in computer_pits:
+        if i == 0:
+            computer_empty_pits += 1
 
+    utility_value = (computer_kalah - human_kalah) + (human_empty_pits - computer_empty_pits) * 3
+    return utility_value
 
 def evaluation_function6(board):
-    return -8
+    state = board.get_state()
+    # last position in array [-1]
+    human_kalah = state[1][-1]
+    computer_kalah = state[0][-1]
+    human_pits = state[1][:-1]
+    computer_pits = state[0][:-1]
+    human_empty_pits = 0
+    computer_empty_pits = 0
+    for i in human_pits:
+        if i == 0:
+            human_empty_pits += 1
+    for i in computer_pits:
+        if i == 0:
+            computer_empty_pits += 1
 
+    utility_value = (computer_kalah - human_kalah) + (human_empty_pits - computer_empty_pits)
+    return utility_value

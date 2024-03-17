@@ -51,8 +51,8 @@ class Board:
         """This method handles the moment of the stones"""
         # Check the choosed pit is not empty
         if not self.pit_not_empty_rule(pit_index):
-            return False
-        
+            return "empty_pit"
+
         # get the pit_index
         pit_index = pit_index if self.turn == 1 else 12 - pit_index
 
@@ -73,7 +73,7 @@ class Board:
                 pit_index = 0
             # Destribute the stones from choosen pit in to next pits, including players own kalaha
             state_array[pit_index] += 1
-        #print (state_array)
+        # print (state_array)
         # If the last stone ends up in an empty pit and the opponent has stones, then steal the opponent's stones
         if state_array[pit_index] == 1:
             # check the last stone doesn't end up in kalaha's
@@ -107,11 +107,11 @@ class Board:
         # update board state after move
         self.state[1] = state_array[:7]
         self.state[0] = state_array[7:]
-        
+
         # check if the last stone ends in player's kalaha
         if (pit_index == 6 and self.turn == 1) or (pit_index == 13 and self.turn == 0):
             return "continue"
-        
+
         return True
 
     def terminate(self):
@@ -132,22 +132,25 @@ class Board:
             player_pits = self.state[self.turn]
 
         if player_pits[pit_index] == 0:
-            #print("You can not pick from an empty pit, try another one")
-            #pit_index = self.get_user_move()
-            #self.take_stones(pit_index)
             return False
         return True
+
+    def pit_empty(self):
+        print("You can not pick from an empty pit, try another one")
+        pit_index = self.get_user_move()
+        return self.take_stones(pit_index)
 
     def continue_playing(self):
         """This method implements kalaha rule that if the last stone ends up in players kalaha then the player can make another move.
         Therefore, named as continue_playing"""
-
+        response = False
         if not self.terminate():
-            self.print_board()
             print("Hurry!! pick another stone from your side :)")
             pit_index = self.get_user_move()
-            self.take_stones(pit_index)
-        return True
+            response = self.take_stones(pit_index)
+            self.print_board()
+
+        return response
 
     def get_winner(self):
         """This method is defined to get the winner of the game."""
@@ -179,50 +182,3 @@ class Board:
         except ValueError:
             print("Invalid input please enter a number between 1 and 6")
             self.get_user_move()
-
-    def take_stones_for_ai(self, pit_index):
-        """This method is used specifically for AI tree construction without validations."""
-
-        if self.state[self.turn][pit_index] == 0:
-            return False
-
-        pit_index = (
-            pit_index if self.turn == 1 else 12 - pit_index
-        )  # Adjust pit index if player 0
-        state_array = self.state[1] + self.state[0]
-        pit_stones = state_array[pit_index]
-        state_array[pit_index] = 0
-
-        for i in range(pit_stones):
-            pit_index += 1
-            if self.turn == 1 and pit_index == 13:
-                pit_index = 0
-            elif self.turn == 0 and pit_index == 6:
-                pit_index = 7
-            elif pit_index > 13:
-                pit_index = 0
-            state_array[pit_index] += 1
-
-        if state_array[pit_index] == 1:
-            if pit_index not in (6, 13):
-                to_capture_pit = abs(pit_index - 12)
-                player_kalaha = 6 if self.turn == 1 else 13
-                pit_start_index = 0 if self.turn == 1 else 7
-                if (
-                    state_array[to_capture_pit] != 0
-                    and pit_start_index <= pit_index < player_kalaha
-                ):
-                    capture_stones = (
-                        state_array[to_capture_pit] + state_array[pit_index]
-                    )
-                    state_array[to_capture_pit] = 0
-                    state_array[pit_index] = 0
-                    state_array[player_kalaha] += capture_stones
-        self.state[1] = state_array[:7]
-        self.state[0] = state_array[7:]
-
-        # Check if the last stone lands in the player's own Kalaha
-        if (pit_index == 6 and self.turn == 1) or (pit_index == 13 and self.turn == 0):
-            return True  # Indicate that AI should continue making moves
-
-        return False  # Indicate that AI should proceed to the next move in the tree construction

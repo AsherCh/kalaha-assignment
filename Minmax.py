@@ -7,6 +7,9 @@ class Minmax:
         self.find_child = find_child
         self.max_depth = max_depth
 
+    def get_max_depth(self):
+        return self.max_depth
+
     def alpha_beta(self,tree):
         utility,best_move= self.max_value(tree.root,float('-inf'),float('inf'),0)
         return utility,best_move

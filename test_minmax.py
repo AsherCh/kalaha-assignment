@@ -14,13 +14,13 @@ def test_minimax_simple_case():
     obj = Tree(simple_tree,2)
 
     # Return the value from the Node
-    def evaluation_fuction(data):
+    def evaluation_function(data):
         return data
 
     def find_children(data, a):
         return data.children[a]
 
-    minimax = Minmax(evaluation_fuction, find_children, 2)
+    minimax = Minmax(evaluation_function, find_children, 2)
 
     utiltiy,best_move = minimax.alpha_beta(obj)
     print ("utility:",utiltiy,"best_move",best_move)

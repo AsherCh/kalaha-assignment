@@ -1,5 +1,5 @@
 # comparing the number of stones in all player's positions (pits+kalaha)
-def evaluation_fuction(board):
+def evaluation_function(board):
     #calculate the utility value
     state = board.get_state()
     # the score of each player = the number of stealing stones
@@ -58,3 +58,11 @@ def evaluation_function4(board):
 
     utility_value = (computer_score - human_score) * (human_empty_pits - computer_empty_pits)
     return utility_value
+
+def evaluation_function5(board):
+    return 10
+
+
+def evaluation_function6(board):
+    return -8
+

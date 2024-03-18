@@ -28,9 +28,9 @@ if __name__ == "__main__":
         root_node = Node(board)
         tree = Tree(root_node, MAX_DEPTH)
         tree.build(tree.get_root(), 0)
-        utility, move_i = minmax.alpha_beta(tree)
-        print("AI Best Move: Utility:", utility, "Best_Move:", move_i + 1)
-        return move_i
+        utility, best_move = minmax.alpha_beta(tree)
+        print("AI Best Move: Utility:", utility, "Best_Move:", best_move + 1)
+        return best_move
 
     def continue_playing(is_ai=False):
         if is_ai:

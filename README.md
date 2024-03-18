@@ -18,7 +18,7 @@ This project requires Python3. Please ensure that pyhton3 is installed in the sy
 
 - `main.py`: Entry point for the Kalaha game. Run this file to start playing the game.
 - `board.py`: Contains the implementation of the Kalaha board class, representing the game state.
-- `minimax.py`: Provides the implementation of the AI player using the Minimax algorithm with alpha-beta pruning for decision making.
+- `minimax.py`: Provides the implementation of the AI player using the Minimax algorithm with alpha-beta pruning for decision-making.
 - `tree.py`: Implements the tree data structure used by the Minimax algorithm for exploring game states.
 - `evaluation_functions.py`: Includes evaluation functions used by the AI player to assess the desirability of different game states.
 

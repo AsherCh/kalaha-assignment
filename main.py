@@ -48,11 +48,7 @@ if __name__ == "__main__":
 
         return True
 
-    ##  evaluation_function2 and evaluation_function3 are better
-    # minmax = Minmax(evaluation_fuction, find_children, MAX_DEPTH)
     minmax = Minmax(evaluation_function2, find_children, MAX_DEPTH)
-    # minmax = Minmax(evaluation_function3, find_children, MAX_DEPTH)
-    # minmax = Minmax(evaluation_function4, find_children, MAX_DEPTH)
 
     game_end = False
     while not game_end:

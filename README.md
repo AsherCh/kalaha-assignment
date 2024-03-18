@@ -8,5 +8,5 @@ This is an implementation of the game Kalaha to be played against an AI.
       cd kalaha-assignment
 2. Execute main.py file to run the game
     ```bash
-   python main.py
+      python main.py
 

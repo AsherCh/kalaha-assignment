@@ -138,7 +138,10 @@ class Board:
     def pit_empty(self):
         print("You can not pick from an empty pit, try another one")
         pit_index = self.get_user_move()
-        return self.take_stones(pit_index)
+        response = self.take_stones(pit_index)
+        if response == "empty_pit":
+            self.pit_empty()
+        return response
 
     def continue_playing(self):
         """This method implements kalaha rule that if the last stone ends up in players kalaha then the player can make another move.

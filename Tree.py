@@ -23,7 +23,7 @@ class Tree:
         for i in range(0, 6):
             board = copy.deepcopy(
                 node.get_data()
-            )  # Copy the root node and seperate the children node
+            )  # Copy the root node and separate the children node
             if board.take_stones(i) != "empty_pit":
                 child_node = Node(board)
                 node.add_children(i, child_node)

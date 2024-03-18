@@ -37,7 +37,7 @@ class Board:
     def get_turn(self):
         return self.turn
 
-    # Make the board snapshoot
+    # Make the board snapshot
     def get_state(self):
         return copy.deepcopy(self.state)
 
@@ -49,7 +49,7 @@ class Board:
 
     def take_stones(self, pit_index):
         """This method handles the moment of the stones"""
-        # Check the choosed pit is not empty
+        # Check the chosen pit is not empty
         if not self.pit_not_empty_rule(pit_index):
             return "empty_pit"
 
@@ -71,7 +71,7 @@ class Board:
                 pit_index = 7
             elif pit_index > 13:
                 pit_index = 0
-            # Destribute the stones from choosen pit in to next pits, including players own kalaha
+            # Distribute the stones from chosen pit in to next pits, including players own kalaha
             state_array[pit_index] += 1
         # print (state_array)
         # If the last stone ends up in an empty pit and the opponent has stones, then steal the opponent's stones
@@ -80,7 +80,7 @@ class Board:
             if pit_index not in (6, 13):
                 # get the index of opponent's pit
                 to_capture_pit = abs(pit_index - 12)
-                # check player and some inital knowledge
+                # check player and some initial knowledge
                 if self.turn == 1:
                     player_kalaha = 6
                     pit_start_index = 0
@@ -101,7 +101,7 @@ class Board:
                     state_array[to_capture_pit] = 0
                     # empty player's pit
                     state_array[pit_index] = 0
-                    # add captured/stealed stones into player's kalaha
+                    # add captured/stolen stones into player's kalaha
                     state_array[player_kalaha] += capture_stones
 
         # update board state after move
@@ -161,11 +161,11 @@ class Board:
         self.state[0][-1] += sum(self.state[0][:-1][::-1])
         self.state[0][:-1] = [0] * (len(self.state[0]) - 1)
         self.print_board()
-        player1Stones = self.state[1][-1]
-        player2Stones = self.state[0][-1]
-        if player1Stones > player2Stones:
+        player1_stones = self.state[1][-1]
+        player2_stones = self.state[0][-1]
+        if player1_stones > player2_stones:
             print("Player 1 has won the game")
-        elif player1Stones < player2Stones:
+        elif player1_stones < player2_stones:
             print("Player 2 has won the game")
         else:
             print("The match has been drawn")

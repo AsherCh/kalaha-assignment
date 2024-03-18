@@ -52,7 +52,6 @@ if __name__ == "__main__":
 
     game_end = False
     while not game_end:
-
         # Human input the first move
         current_player = board.get_turn()
         print(current_player, " Human,please pick up your stones from your side:")
@@ -65,7 +64,12 @@ if __name__ == "__main__":
         elif response == "continue":
             continue_playing()
 
+        game_end = board.terminate()
+        if game_end:
+            break
+
         board.reverse_player()
+
         move_i = get_ai_move()
         response = board.take_stones(move_i)
         board.print_board()

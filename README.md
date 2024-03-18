@@ -22,5 +22,5 @@ This project requires Python3. Please ensure that pyhton3 is installed in the sy
 - `tree.py`: Implements the tree data structure used by the Minimax algorithm for exploring game states.
 - `evaluation_functions.py`: Includes evaluation functions used by the AI player to assess the desirability of different game states.
 
-##Credits
+## Credits
 This game has been implemented by Group 39 as a board game assignment for the course Introduction to AI 02180. 

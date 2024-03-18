@@ -139,6 +139,8 @@ class Board:
         print("You can not pick from an empty pit, try another one")
         pit_index = self.get_user_move()
         response = self.take_stones(pit_index)
+        if response == "empty_pit":
+            self.pit_empty()
         return response
 
     def continue_playing(self):
@@ -179,7 +181,7 @@ class Board:
                 return move
             else:
                 print("Invalid input please enter a number between 1 and 6")
-                self.get_user_move()
+                return self.get_user_move()
         except ValueError:
             print("Invalid input please enter a number between 1 and 6")
-            self.get_user_move()
+            return self.get_user_move()
